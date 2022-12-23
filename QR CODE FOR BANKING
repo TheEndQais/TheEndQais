@@ -17,6 +17,7 @@ bg_image.paste(qr_image, (100, 100))  # Platziere den QR-Code an den Koordinaten
 draw = ImageDraw.Draw(bg_image)
 font = ImageFont.truetype("arial.ttf", 36)
 label = "Scan me!"
+
 label_width, label_height = draw.textsize(label, font=font)
 draw.text(((bg_image.width - label_width) / 2, qr_size + 150), label, font=font, fill=(0, 0, 0))
 
