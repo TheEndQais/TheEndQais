@@ -1,28 +1,35 @@
 from PIL import Image, ImageDraw, ImageFont
-import os
+import pyqrcode
 
-# Erstelle eine Liste mit den Pfaden zu den Bilddateien, die du konvertieren möchtest
-image_paths = ["bild1.jpg", "bild2.jpg", "bild3.png"]
+# Erstelle den QR-Code
+url = "https://www.example.com"
+qr = pyqrcode.create(url)
+qr_size = 400  # Größe des QR-Codes in Pixeln
+qr_image = qr.make_image(fill_color="black", back_color="white", size=qr_size)
 
-# Erstelle ein neues PDF-Dokument
-pdf_path = "bilder.pdf"
-pdf_pages = []
+# Öffne das Hintergrundbild
+bg_image = Image.open("hintergrund.jpg")
 
-# Konvertiere jedes Bild in eine PDF-Seite und füge sie dem PDF-Dokument hinzu
-for path in image_paths:
-    img = Image.open(path)
+# Setze den QR-Code auf den Hintergrund
+bg_image.paste(qr_image, (100, 100))  # Platziere den QR-Code an den Koordinaten (100, 100)
 
-    # Erstelle ein Textlabel für jede PDF-Seite
-    draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype("arial.ttf", 36)
-    label = os.path.splitext(os.path.basename(path))[0]
-    label_width, label_height = draw.textsize(label, font=font)
-    draw.text(((img.width - label_width) / 2, 10), label, font=font, fill=(0, 0, 0))
+# Erstelle eine Meldeanzeige für den QR-Code
+draw = ImageDraw.Draw(bg_image)
+font = ImageFont.truetype("arial.ttf", 36)
+label = "Scan me!"
+label_width, label_height = draw.textsize(label, font=font)
+draw.text(((bg_image.width - label_width) / 2, qr_size + 150), label, font=font, fill=(0, 0, 0))
 
-    # Füge das Bild zum PDF-Dokument hinzu
-    pdf_pages.append(img.convert("RGB"))
-
-# Speichere das PDF-Dokument
-pdf_pages[0].save(
-    pdf_path, "PDF" ,resolution=100.0, save_all=True, append_images=pdf_pages[1:]
-)
+# Speichere das Bild mit dem QR-Code, Hintergrund und Meldeanzeige
+bg_image.save("qr_code_with_bg_and_label.jpg")
+<!-- Erstelle ein DIV-Element, in dem die Werbung angezeigt wird -->
+<div id="ad-container">
+  <!-- Füge das Google AdSense-Skript ein -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1234567890",  // Ersetze dies durch Ihre eigene AdSense-Publisher-ID
+      enable_page_level_ads: true
+    });
+  </script>
+</div>
